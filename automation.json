@@ -1,0 +1,1739 @@
+{
+  "name": "final_automation",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Linkedin profile scraper ",
+        "formDescription": "Give the job description, and Excel file name,e and the sheet name",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Job Description",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "File Url",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Sheet name of profiles",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Key Words"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -640,
+        520
+      ],
+      "id": "b758de96-7265-4414-aac4-48546b35fa02",
+      "name": "On form submission",
+      "webhookId": "5ac8c662-5a49-4bcc-816c-c1f4e4ecdb12"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "JD",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "spreadsheetId",
+              "displayName": "spreadsheetId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sheetId",
+              "displayName": "sheetId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "index",
+              "displayName": "index",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "sheetType",
+              "displayName": "sheetType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "gridProperties",
+              "displayName": "gridProperties",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -420,
+        770
+      ],
+      "id": "94840acb-2217-4035-b08a-f8d2c7c737df",
+      "name": "add JD",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1c1a54c9-601b-4a43-b7f2-ae3d0d715892",
+              "name": "profileUrls",
+              "value": "={{ $('Loop Profiles One by One').all().map(item => item.json['Profile URL']) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        220
+      ],
+      "id": "56bbc502-90af-4ac7-917e-9dec1f89f7ad",
+      "name": "array of linkdin profiles"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "profile_data",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "linkedinUrl",
+              "displayName": "linkedinUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fullName",
+              "displayName": "fullName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "headline",
+              "displayName": "headline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "connections",
+              "displayName": "connections",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "followers",
+              "displayName": "followers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "mobileNumber",
+              "displayName": "mobileNumber",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "jobTitle",
+              "displayName": "jobTitle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "companyName",
+              "displayName": "companyName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "companyIndustry",
+              "displayName": "companyIndustry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "companyWebsite",
+              "displayName": "companyWebsite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "companyLinkedin",
+              "displayName": "companyLinkedin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "companyFoundedIn",
+              "displayName": "companyFoundedIn",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "companySize",
+              "displayName": "companySize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "currentJobDuration",
+              "displayName": "currentJobDuration",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "currentJobDurationInYrs",
+              "displayName": "currentJobDurationInYrs",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "topSkillsByEndorsements",
+              "displayName": "topSkillsByEndorsements",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "addressCountryOnly",
+              "displayName": "addressCountryOnly",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "addressWithCountry",
+              "displayName": "addressWithCountry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "addressWithoutCountry",
+              "displayName": "addressWithoutCountry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "profilePic",
+              "displayName": "profilePic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "profilePicHighQuality",
+              "displayName": "profilePicHighQuality",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "about",
+              "displayName": "about",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "publicIdentifier",
+              "displayName": "publicIdentifier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "openConnection",
+              "displayName": "openConnection",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "urn",
+              "displayName": "urn",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "experiences",
+              "displayName": "experiences",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "updates",
+              "displayName": "updates",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "skills",
+              "displayName": "skills",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "profilePicAllDimensions",
+              "displayName": "profilePicAllDimensions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "educations",
+              "displayName": "educations",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "licenseAndCertificates",
+              "displayName": "licenseAndCertificates",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "honorsAndAwards",
+              "displayName": "honorsAndAwards",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "languages",
+              "displayName": "languages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "volunteerAndAwards",
+              "displayName": "volunteerAndAwards",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "verifications",
+              "displayName": "verifications",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "promos",
+              "displayName": "promos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "highlights",
+              "displayName": "highlights",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "projects",
+              "displayName": "projects",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "publications",
+              "displayName": "publications",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "patents",
+              "displayName": "patents",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "courses",
+              "displayName": "courses",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "testScores",
+              "displayName": "testScores",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "organizations",
+              "displayName": "organizations",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "volunteerCauses",
+              "displayName": "volunteerCauses",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "interests",
+              "displayName": "interests",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "recommendations",
+              "displayName": "recommendations",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        680,
+        220
+      ],
+      "id": "f611ed59-42e2-4af3-92ee-fbbf2534cf81",
+      "name": "full_profile_data",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Compare the following Job Description and Candidate Profile, then return a JSON output with:\nName: Extract the full name of the candidate.\nExperience: Estimate total relevant experience in years based on the candidate’s profile (e.g., work history, summary).\nProfile_match_score**: A number from 0 to 100 that reflects how well the candidate matches the job, based on:\n  * Skill match\n  * Module/tool expertise\n  * Responsibilities alignment\n  * Years of experience\nSuggested: Return \"Yes\"if `Profile_match_score >= 60`, else \"No\".\nLinkedIn_url: Extract the LinkedIn profile link from the candidate data.\nModules: Identify and list **modules, tools, platforms, or technologies** the candidate has worked on or can work on (based on the profile summary).\nPrimary Skill: Identify the main area of expertise** or dominant skill of the candidate.\nLocation: current location of the candidate \nModules Match: Return \"Yes\" if there is significant overlap between candidate modules and skills/responsibilities listed in the job description, otherwise \"No\".\nJob Description :\n{{ $('On form submission').item.json['Job Description'] }}\nCandidate Profile:\n{{ $json.url }}\n{{ $json.summary }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        220
+      ],
+      "id": "14c1cfcf-4c05-4248-9b32-5c1e63dc0a6b",
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "profile_match_score ",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "output"
+          ],
+          "schema": [
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "headers",
+              "displayName": "headers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row",
+              "displayName": "row",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1936,
+        295
+      ],
+      "id": "b7157fba-27e7-4bf8-b7fd-a0913aa59007",
+      "name": "all_profiles",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "profile_match_score ",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -200,
+        770
+      ],
+      "id": "4b2668bb-02b5-4180-8756-d7370d235d1b",
+      "name": "getting all profiles score",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": ">90",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Experience",
+              "displayName": "Experience",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Profile_match_score",
+              "displayName": "Profile_match_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Suggested",
+              "displayName": "Suggested",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LinkedIn_url",
+              "displayName": "LinkedIn_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Modules",
+              "displayName": "Modules",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        680,
+        770
+      ],
+      "id": "73b0bc74-0b3a-429b-a24f-7e968b9e9e40",
+      "name": ">90",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4a7b8e0e-31b1-41b5-933a-51e9929892ef",
+              "leftValue": "={{ $json.Profile_match_score }}",
+              "rightValue": 90,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        770
+      ],
+      "id": "e13043f3-2a78-4252-970b-460f56a7eaa7",
+      "name": "filter above  90% profiles",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": ">80",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Experience",
+              "displayName": "Experience",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Profile_match_score",
+              "displayName": "Profile_match_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Suggested",
+              "displayName": "Suggested",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LinkedIn_url",
+              "displayName": "LinkedIn_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Modules",
+              "displayName": "Modules",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        240,
+        770
+      ],
+      "id": "abff26d9-f4d4-468c-8d9a-5586c0758e6d",
+      "name": ">80",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json['File Url'] }}",
+          "mode": "url"
+        },
+        "title": "JD",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -420,
+        20
+      ],
+      "id": "e23f68d5-e9cc-4dc9-b64a-5a1ce59a1e90",
+      "name": "Creating a sheet named JD",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Creating All Sheets ",
+        "height": 220,
+        "width": 1260
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -480,
+        -40
+      ],
+      "typeVersion": 1,
+      "id": "5ed874b7-0bd5-4db3-ad54-15a8175100e6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Ai Agent ",
+        "height": 400,
+        "width": 340,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1080,
+        180
+      ],
+      "typeVersion": 1,
+      "id": "ecf63071-580a-4df5-a60b-97706ac38209",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "Sceening The Profiles ",
+        "height": 220,
+        "width": 1660
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -540,
+        710
+      ],
+      "typeVersion": 1,
+      "id": "5159b2e6-db4b-4efb-bd59-eeaab91b6345",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# Final Work flow ",
+        "height": 1100,
+        "width": 2900,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -760,
+        -140
+      ],
+      "typeVersion": 1,
+      "id": "2b2381c8-23a8-4b94-82c0-1a6fc5bc73f6",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bc549d36-199f-4b88-b510-7811ddb383b7",
+              "leftValue": "={{ $json.Profile_match_score }}",
+              "rightValue": 85,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        20,
+        770
+      ],
+      "id": "67d91fbb-931d-4a26-9a5f-19b4a1ea158d",
+      "name": "filter above  80% profiles"
+    },
+    {
+      "parameters": {
+        "jsCode": "    return [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        770
+      ],
+      "id": "8a01fe10-e9df-4daf-8601-ec2ccfdf7e4f",
+      "name": "End Of the Process1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "title": "profile_data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -200,
+        20
+      ],
+      "id": "7ffd0ee4-1bb8-45d3-94ed-dd5d5a9d7599",
+      "name": "Creating a sheet named full profile data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "title": "profile_match_score ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        20,
+        20
+      ],
+      "id": "8244f5df-cb58-44a3-b4bc-95601406020a",
+      "name": "Creating a sheet named profile match score",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "title": ">80",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        240,
+        20
+      ],
+      "id": "4b354b49-b2e5-404c-9eac-69bccfbd091f",
+      "name": "Creating a sheet named >80",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('On form submission').item.json['File Url'] }}",
+          "mode": "url"
+        },
+        "title": ">90",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        460,
+        20
+      ],
+      "id": "99e138b1-389d-40c8-8fcf-9a014652d8bf",
+      "name": "Creating a sheet named >90",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json['File Url'] }}",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $json['Sheet name of profiles'] }}",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -420,
+        520
+      ],
+      "id": "07315f23-abe1-4300-9f72-ac35f874789f",
+      "name": "Getting All profiles",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BzjsLEEyvfAD7qeq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -200,
+        520
+      ],
+      "id": "65588264-abf6-47d9-85c4-db4f579a7dfa",
+      "name": "Loop Profiles One by One"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['Profile URL'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        20,
+        220
+      ],
+      "id": "5edc2e1d-f81c-47c1-809c-18a4316966bc",
+      "name": "verifing linkeding profile",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/dev_fusion~linkedin-profile-scraper/run-sync-get-dataset-items?token=apify_api_c9Ub5eOwzIusfwS3rMhoNyXwtposJC2liN4D",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"profileUrls\": {{ $json.profileUrls }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        220
+      ],
+      "id": "19886577-030e-4f56-b510-523ece157f31",
+      "name": "scraping the profiles",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Define the summary generation function for new LinkedIn profile data structure\nfunction generateProfileSummary(json) {\n  const summaryParts = [];\n\n  // Basic Info\n  if (json.firstName || json.lastName || json.headline) {\n    summaryParts.push(`Name: ${json.firstName || ''} ${json.lastName || ''}`.trim());\n    if (json.headline) summaryParts.push(`Headline: ${json.headline}`);\n  }\n\n  if (json.linkedinUrl) {\n    summaryParts.push(`Profile URL: ${json.linkedinUrl}`);\n  }\n\n  // Contact Information\n  if (json.email) {\n    summaryParts.push(`Email: ${json.email}`);\n  }\n\n  if (json.mobileNumber) {\n    summaryParts.push(`Mobile: ${json.mobileNumber}`);\n  }\n\n  // Current Position & Company Info\n  if (json.jobTitle || json.companyName) {\n    const currentJob = [];\n    if (json.jobTitle) currentJob.push(`Title: ${json.jobTitle}`);\n    if (json.companyName) currentJob.push(`Company: ${json.companyName}`);\n    if (json.companyIndustry) currentJob.push(`Industry: ${json.companyIndustry}`);\n    if (json.currentJobDuration) currentJob.push(`Duration: ${json.currentJobDuration}`);\n    if (currentJob.length > 0) {\n      summaryParts.push(`Current Position:\\n${currentJob.join('\\n')}`);\n    }\n  }\n\n  // Network Info\n  if (json.connections || json.followers) {\n    const networkInfo = [];\n    if (json.connections) networkInfo.push(`Connections: ${json.connections}`);\n    if (json.followers) networkInfo.push(`Followers: ${json.followers}`);\n    summaryParts.push(`Network: ${networkInfo.join(', ')}`);\n  }\n\n  // Location\n  if (json.addressWithCountry) {\n    summaryParts.push(`Location: ${json.addressWithCountry}`);\n  }\n\n  // About Section\n  if (json.about) {\n    summaryParts.push(`About:\\n${json.about}`);\n  }\n\n  // Top Skills\n  if (json.topSkillsByEndorsements) {\n    summaryParts.push(`Top Skills: ${json.topSkillsByEndorsements}`);\n  }\n\n  // Experience Section\n  if (Array.isArray(json.experiences) && json.experiences.length > 0) {\n    json.experiences.forEach((exp, i) => {\n      const expLines = [];\n      if (exp.title) expLines.push(`Title: ${exp.title}`);\n      if (exp.subtitle) expLines.push(`Company: ${exp.subtitle}`);\n      if (exp.caption) expLines.push(`Duration: ${exp.caption}`);\n      if (exp.metadata) expLines.push(`Location: ${exp.metadata}`);\n      \n      if (exp.subComponents && exp.subComponents.length > 0) {\n        exp.subComponents.forEach((sub, j) => {\n          if (sub.description && sub.description.length > 0) {\n            expLines.push(`Description: ${sub.description.join(', ')}`);\n          }\n        });\n      }\n\n      if (expLines.length > 0) {\n        summaryParts.push(`Experience ${i + 1}:\\n${expLines.join('\\n')}`);\n      }\n    });\n  }\n\n  // Education Section\n  if (Array.isArray(json.educations) && json.educations.length > 0) {\n    json.educations.forEach((edu, i) => {\n      const eduLines = [];\n      if (edu.title) eduLines.push(`Institution: ${edu.title}`);\n      if (edu.subtitle) eduLines.push(`Degree: ${edu.subtitle}`);\n      \n      if (eduLines.length > 0) {\n        summaryParts.push(`Education ${i + 1}:\\n${eduLines.join('\\n')}`);\n      }\n    });\n  }\n\n  // Skills Section\n  if (Array.isArray(json.skills) && json.skills.length > 0) {\n    const skillsList = json.skills.map(skill => {\n      let skillText = skill.title;\n      if (skill.subComponents && skill.subComponents.length > 0) {\n        const endorsements = skill.subComponents.flatMap(sub => \n          sub.description ? sub.description.map(desc => desc.text) : []\n        ).filter(Boolean);\n        if (endorsements.length > 0) {\n          skillText += ` (${endorsements.join(', ')})`;\n        }\n      }\n      return skillText;\n    });\n    summaryParts.push(`Skills:\\n${skillsList.join('\\n')}`);\n  }\n\n  // Licenses and Certifications\n  if (Array.isArray(json.licenseAndCertificates) && json.licenseAndCertificates.length > 0) {\n    json.licenseAndCertificates.forEach((cert, i) => {\n      const certLines = [];\n      if (cert.title) certLines.push(`Certificate: ${cert.title}`);\n      if (cert.subtitle) certLines.push(`Issuer: ${cert.subtitle}`);\n      if (cert.caption) certLines.push(`Date: ${cert.caption}`);\n      \n      if (certLines.length > 0) {\n        summaryParts.push(`Certification ${i + 1}:\\n${certLines.join('\\n')}`);\n      }\n    });\n  }\n\n  // Interests Section\n  if (Array.isArray(json.interests) && json.interests.length > 0) {\n    json.interests.forEach((interest, i) => {\n      const interestLines = [];\n      if (interest.section_name) interestLines.push(`Category: ${interest.section_name}`);\n      \n      if (Array.isArray(interest.section_components)) {\n        interest.section_components.forEach((component, j) => {\n          const compLines = [];\n          if (component.titleV2) compLines.push(`  Title: ${component.titleV2}`);\n          if (component.caption) compLines.push(`  Caption: ${component.caption}`);\n          if (component.subtitle) compLines.push(`  Description: ${component.subtitle}`);\n          if (compLines.length > 0) {\n            interestLines.push(`Item ${j + 1}:\\n${compLines.join('\\n')}`);\n          }\n        });\n      }\n      \n      if (interestLines.length > 0) {\n        summaryParts.push(`Interests ${i + 1}:\\n${interestLines.join('\\n')}`);\n      }\n    });\n  }\n\n  return {\n    url: json.linkedinUrl,\n    summary: summaryParts.join('\\n\\n')\n  };\n}\n\n// Return the summary for current item\nreturn generateProfileSummary($json);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        220
+      ],
+      "id": "0f12c24a-7f8e-40db-879f-ffe658677b3f",
+      "name": "converting it into a single text"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  return {\n    json: $input.first().json.output\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        220
+      ],
+      "id": "c5cd0ddc-6c0f-4c98-a4bc-451b820649ad",
+      "name": "coverting into siglw values"
+    },
+    {
+      "parameters": {
+        "modelName": "models/learnlm-2.0-flash-experimental",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1148,
+        440
+      ],
+      "id": "459ffd60-c15d-4692-b30d-c25d089647e7",
+      "name": "model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GfkusCXRArxwOxFy",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"Name\": \"Ayesha Sharma\",\n  \"Experience\": \"6\",\n  \"Profile_match_score\": 78,\n  \"Suggested\": \"Yes\",\n  \"LinkedIn_url\": \"https://www.linkedin.com/in/ayeshasharma/\",\n  \"Modules\": [\n    \"Java\",\n    \"Spring Boot\",\n    \"REST APIs\",\n    \"Microservices\",\n    \"Docker\",\n    \"Kubernetes\",\n    \"PostgreSQL\",\n    \"AWS\"\n  ],\n  \"Primary Skill\": \"Backend Development with Java and Spring Boot\",\n  \"Location\": \"Hyderabad, India\",\n  \"Modules Match\": \"Yes\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1268,
+        440
+      ],
+      "id": "47a7c1bd-3650-444e-a406-7975ea09d579",
+      "name": "output parser"
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Job Description": "Exp : 10- 15yrs  Location : Hyderabad, Gurugram  NP – Immediate - 30days  Skills : Pega LBA+ Smart Dispute        We are seeking a highly experienced Senior Business Analyst with deep expertise with 10+ years of experience in Pega Smart Dispute and a strong background in the banking and financial services sector. Facilitate workshops and discussions to gather and clarify requirements. Engage and manage stakeholders across various teams, ensuring alignment on project deliverables. Propose streamlined workflows and automation or redundancies. Ensuring the requirements align with business goals Ensure systems and processes comply with local and international regulations Identify potential risks and developing mitigation strategies Keeping abreast of regulatory changes and updating the processes accordingly. Better understand the customer needs and preferences to deliver the right products and services for enhancing customer satisfaction. Automation mindset for process optimizations, operational efficiency improvements. A motivated BA with a proven history of delivering the customer centric solutions across various domains in the Banking industry. Minimum 10+ years of experience in Banking industry with strong knowledge in banking domain including Business Private Banking, Personal Banking, Corporate and Institutional Banking, Home and Business Lending, Fincrime, Fraud, Retail banking and Investment banking. Experience in any BPM tool, Pega skill is a bonus for this role. Experience in software development methodologies such as agile/Scrum. Must have: Pega Smart Dispute Skills",
+          "File Url": "https://docs.google.com/spreadsheets/d/141zlKGFIiERgWDCD3GiTvtPO-UtkcAfEL2wagDq0lz0/edit?gid=0#gid=0",
+          "Sheet name of profiles": "linkedin_data",
+          "Key Words": "",
+          "submittedAt": "2025-06-29T03:44:56.862-04:00",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Getting All profiles",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Creating a sheet named JD",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "add JD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "array of linkdin profiles": {
+      "main": [
+        [
+          {
+            "node": "scraping the profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "full_profile_data": {
+      "main": [
+        [
+          {
+            "node": "converting it into a single text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "coverting into siglw values",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "all_profiles": {
+      "main": [
+        [
+          {
+            "node": "Loop Profiles One by One",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getting all profiles score": {
+      "main": [
+        [
+          {
+            "node": "filter above  80% profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "filter above  90% profiles": {
+      "main": [
+        [
+          {
+            "node": ">90",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add JD": {
+      "main": [
+        [
+          {
+            "node": "getting all profiles score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    ">80": {
+      "main": [
+        [
+          {
+            "node": "filter above  90% profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creating a sheet named JD": {
+      "main": [
+        [
+          {
+            "node": "Creating a sheet named full profile data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    ">90": {
+      "main": [
+        [
+          {
+            "node": "End Of the Process1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "filter above  80% profiles": {
+      "main": [
+        [
+          {
+            "node": ">80",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creating a sheet named full profile data": {
+      "main": [
+        [
+          {
+            "node": "Creating a sheet named profile match score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creating a sheet named profile match score": {
+      "main": [
+        [
+          {
+            "node": "Creating a sheet named >80",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creating a sheet named >80": {
+      "main": [
+        [
+          {
+            "node": "Creating a sheet named >90",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creating a sheet named >90": {
+      "main": [
+        []
+      ]
+    },
+    "Getting All profiles": {
+      "main": [
+        [
+          {
+            "node": "Loop Profiles One by One",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Profiles One by One": {
+      "main": [
+        [],
+        [
+          {
+            "node": "verifing linkeding profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifing linkeding profile": {
+      "main": [
+        [
+          {
+            "node": "array of linkdin profiles",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Profiles One by One",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "scraping the profiles": {
+      "main": [
+        [
+          {
+            "node": "full_profile_data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "converting it into a single text": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coverting into siglw values": {
+      "main": [
+        [
+          {
+            "node": "all_profiles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "output parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4c5e7481-de1b-48c3-a133-4659201cd068",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "153a5b13df76e30d9113d345de4e72e31fdad105e16c2af7bab01690e0a9b78a"
+  },
+  "id": "CdjwjeOjMR2cmSuE",
+  "tags": []
+}
